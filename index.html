@@ -112,7 +112,7 @@
         async function fetchCurrentKey() {
             try {
                 // Replace with your actual GitHub username and repo name
-                const response = await fetch('https://raw.githubusercontent.com/YOURUSERNAME/YOURREPO/main/current_key.txt');
+                const response = await fetch('https://raw.githubusercontent.com/Grapzyke/KS/main/current_key.txt');
                 const key = await response.text();
                 currentKey = key.trim();
                 
