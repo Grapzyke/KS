@@ -1,0 +1,43 @@
+import random
+import string
+import json
+from datetime import datetime
+
+def generate_keys(count=360):
+    """Generate 360 unique keys for rotation system"""
+    keys = []
+    used_keys = set()
+    
+    while len(keys) < count:
+        # Generate 12-character key
+        key = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
+        
+        # Ensure uniqueness
+        if key not in used_keys:
+            keys.append(key)
+            used_keys.add(key)
+    
+    # Create the JSON structure
+    data = {
+        "keys": keys,
+        "current_index": 0,
+        "last_rotation": int(datetime.now().timestamp()),
+        "rotation_interval": 172800,  # 48 hours in seconds
+        "total_keys": count,
+        "created_at": datetime.now().isoformat()
+    }
+    
+    # Write to keys.json
+    with open('keys.json', 'w') as f:
+        json.dump(data, f, indent=2)
+    
+    # Write current key to separate file
+    with open('current_key.txt', 'w') as f:
+        f.write(keys[0])
+    
+    print(f"Generated {count} keys successfully!")
+    print(f"First key: {keys[0]}")
+    print("Files created: keys.json, current_key.txt")
+
+if __name__ == "__main__":
+    generate_keys()
